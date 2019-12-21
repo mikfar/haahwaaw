@@ -20,6 +20,7 @@ half = imgIn.crop(( 0 , 0, x/2 , y )).transpose(Image.FLIP_LEFT_RIGHT) # crop th
 # note for the pasting co-ordinate: top left corner of pasted image will be at this position
 
 imgIn.paste(half ,( x/2 , 0 )) # pastes the transposed left half into the right half of the image
+
 imgIn.save(sys.argv[1] + "-MIRRORED." + imgIn.format) # saves with extension of original image
 
 
