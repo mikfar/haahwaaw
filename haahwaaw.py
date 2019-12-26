@@ -19,10 +19,15 @@ if x%2 != 0:
     imgIn = imgIn.resize((x+1, y))
     x += 1
 
-half = imgIn.crop(( 0 , 0, x/2 , y )).transpose(Image.FLIP_LEFT_RIGHT) # crop the left half of the image and flip it left to right
+if sys.argv[len(sys.argv)-1] == "-r":
+    side = "RIGHT" 
+    half = imgIn.crop(( x/2, 0, x , y )).transpose(Image.FLIP_LEFT_RIGHT)
+    imgIn.paste(half ,( 0 , 0 )) # pastes the transposed right half into the left half of the image
 
-# note for the pasting co-ordinate: top left corner of pasted image will be at this position
+else:
+    side = "LEFT"
+    half = imgIn.crop(( 0 , 0, x/2 , y )).transpose(Image.FLIP_LEFT_RIGHT) # crop the left half of the image and flip it left to right
+    # note for the pasting co-ordinate: top left corner of pasted image will be at this position
+    imgIn.paste(half ,( x/2 , 0 )) # pastes the transposed left half into the right half of the image
 
-imgIn.paste(half ,( x/2 , 0 )) # pastes the transposed left half into the right half of the image
-
-imgIn.save(sys.argv[1] + "-MIRRORED." + imgFormat) # saves with extension of original image
+imgIn.save(sys.argv[1] + "-MIRRORED" + "-" + side + "." + imgFormat) # saves with extension of original image
