@@ -10,10 +10,14 @@ if (len(sys.argv) < 2):
 
 imgIn = Image.open(sys.argv[1]) # image that was passed in through command line
 x, y = imgIn.size # variables for length and width of image passed in
+# format needs to be assigned to a variable incase the image is later resized, as this attribute will then become None (PIL documentation)
+imgFormat = imgIn.format
 
-# workaround for uneven width could just be increasing width of source image by one pixel, will implement later if not lazy
+# workaround for uneven width
 if x%2 != 0: 
-    print("The width of this image is " + x + "px. Images of even width are preferred for best results.")
+    print("The width of this image is " + str(x) + "px. Adding 1 pixel to width for even width.")
+    imgIn = imgIn.resize((x+1, y))
+    x += 1
 
 half = imgIn.crop(( 0 , 0, x/2 , y )).transpose(Image.FLIP_LEFT_RIGHT) # crop the left half of the image and flip it left to right
 
@@ -21,7 +25,4 @@ half = imgIn.crop(( 0 , 0, x/2 , y )).transpose(Image.FLIP_LEFT_RIGHT) # crop th
 
 imgIn.paste(half ,( x/2 , 0 )) # pastes the transposed left half into the right half of the image
 
-imgIn.save(sys.argv[1] + "-MIRRORED." + imgIn.format) # saves with extension of original image
-
-
-
+imgIn.save(sys.argv[1] + "-MIRRORED." + imgFormat) # saves with extension of original image
