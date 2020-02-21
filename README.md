@@ -1,2 +1,3 @@
-![Alt text](halowars.jpg?raw=true "halo wars")
-![Alt text](haahwaaw.jpg?raw=true "haah waaw")
+<img src="halowars.jpg" width="200">
+becomes
+<img src="haahwaaw.jpg" width="200">
